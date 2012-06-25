@@ -1,0 +1,71 @@
+Testing user registration
+==========================
+
+    Setup the portal
+
+    >>> app = layer['app']
+    >>> portal = layer['portal']
+    >>> portal.email_from_address = 'WEBMASTER@EXAMPLE.ORG'
+    >>> portal.MailHost.smtp_host = 'localhost'
+    >>> import transaction
+    >>> transaction.commit()
+    >>> request = layer['request']
+
+    >>> from plone.testing.z2 import Browser
+    >>> browser = Browser(app)
+    >>> browser.handleErrors = False
+    >>> portalURL = portal.absolute_url()
+
+    Start the test
+
+    >>> browser.open(portalURL)
+  
+    Logged out user should now see the register link.
+    >>> 'Register' in browser.contents
+    True
+    
+    >>> browser.getLink('Register').click()
+    >>> '@@register' in browser.url
+    True
+
+    >>> browser.open('http://nohost/plone/@@register')
+
+    >>> 'Password' in browser.contents
+    True
+    >>> 'Confirm password' in browser.contents
+    True
+
+    Ensure that fields are being validated
+    >>> browser.getControl('Register').click()
+    >>> browser.contents
+    '...There were errors...E-mail...Required input is missing...'
+    
+    Fill out the form. 
+    >>> browser.getControl('Full Name').value = 'Simples Consultoria'
+    >>> browser.getControl('E-mail').value = 'products@simplesconsultoria.com.br'
+    >>> browser.getControl('Password').value = 'secret'
+    >>> browser.getControl('Confirm password').value = 'secret'
+
+    Add a picture
+    >>> from pkg_resources import resource_stream
+    >>> portrait_file = resource_stream("conference.profile.tests", 'user_portrait.png')
+    >>> browser.getControl(name='form.portrait').add_file(portrait_file, "image/png", "user_portrait.png")
+
+    Save the form
+    >>> browser.getControl('Register').click()
+    >>> 'Failed to create your account' not in browser.contents
+    True
+
+    Ensure that the user has, in fact, been added.
+    >>> browser.open('http://nohost/plone/login_form')
+    >>> browser.getControl('E-mail').value = 'products@simplesconsultoria.com.br'
+    >>> browser.getControl('Password').value = 'secret'
+    >>> browser.getControl('Log in').click()
+    >>> browser.getLink('My Page').click()
+    >>> 'Simples Consultoria' in browser.contents
+    True
+      
+    >>> browser.getLink(url='http://nohost/plone/logout').click()
+    >>> 'Log in' in browser.contents
+    True
+    

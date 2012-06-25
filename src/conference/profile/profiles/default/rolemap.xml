@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<rolemap>
+   <permissions>
+    <permission name="conference.profile: Add Profile" acquire="False">
+    </permission>
+    <permission name="Add portal member"
+                acquire="False">
+        <role name="Manager" />
+        <role name="Site Administrator"/>
+        <role name="Owner" />
+        <role name="Anonymous" />
+    </permission>
+  </permissions>
+</rolemap>

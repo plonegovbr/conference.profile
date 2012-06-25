@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<object name="portal_properties" meta_type="Plone Properties Tool">
+ <object name="site_properties" meta_type="Plone Property Sheet">
+  <property name="use_email_as_login" type="boolean">True</property>
+  <property name="user_registration_fields" type="lines">
+   <element value="fullname"/>
+   <element value="username"/>
+   <element value="email"/>
+   <element value="twitter"/>
+   <element value="location"/>
+   <element value="gender"/>
+   <element value="password"/>
+   <element value="portrait"/>
+   <element value="mail_me"/>
+  </property>
+ </object>
+</object>

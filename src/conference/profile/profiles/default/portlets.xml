@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<portlets>
+<!-- Remove portlets from /Members-->
+ <blacklist
+     manager="plone.leftcolumn"
+     category="context"
+     location="/Members"
+     status="block"
+ />
+ <blacklist
+     manager="plone.rightcolumn"
+     category="context"
+     location="/Members"
+     status="block"
+ />     
+
+</portlets>

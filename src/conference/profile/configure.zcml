@@ -1,0 +1,22 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:grok="http://namespaces.zope.org/grok">
+
+    <includeDependencies package="." />
+
+    <include package="Products.CMFCore" file="permissions.zcml" />
+    
+    <permission
+        id="conference.profile.AddProfile"
+        title="conference.profile: Add Profile"
+      />
+
+	<adapter
+	  provides=".registration.userdata.IConferenceUserDataSchema"
+	  for="Products.CMFCore.interfaces.ISiteRoot"
+	  factory=".registration.userdata.ConferenceUserDataPanelAdapter"
+	  />
+
+    <grok:grok package="." />
+
+</configure>
